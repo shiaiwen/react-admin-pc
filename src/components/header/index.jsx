@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { reqGetWheather } from '../../api/index.js'
+import { reqGetWheather } from '../../api'
+import { Modal } from 'antd';
 import dateUtlls from '../../utils/dateUtils.js'
 import menuList from '../../config/menuConfig'
+import localStorage from '../../utils/localStorage'
+import storage from '../../utils/storage'
+import LinkButton from '../link-button';
+
 import './index.less'
 
 class Header extends Component {
@@ -13,7 +18,7 @@ class Header extends Component {
 
   getTime = () => {
     // 获取时间,并更新
-    setInterval(() => {
+    this.timer = setInterval(() => {
       const curTime = dateUtlls.getNow()
       this.setState({
         curTime
@@ -46,11 +51,28 @@ class Header extends Component {
 
   }
 
+  logout = () => {
+    const { confirm } = Modal;
+    confirm({
+      title: '确认退出登录吗',
+      okText: "确认",
+      cancelText: '取消',
+      onOk: () => {
+        storage.user = {}
+        localStorage.removeUser()
+        this.props.history.replace('/login')
+      },
+
+    });
+  }
+
   // 第一次 render 之后执行, 一般用来执行 异步操作
   componentDidMount() {
     this.getTime()
     this.getWeather()
-    // this
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 
 
@@ -61,13 +83,13 @@ class Header extends Component {
       <div className='header'>
         <div className='header-top'>
           <span>欢迎，admin</span>
-          <a>退出</a>
+          {/* <Button type="link" onClick={this.logout}>退出</Button> */}
+          <LinkButton onClick={this.logout}>退 出</LinkButton>
         </div>
         <div className='header-bottom'>
           <div className='header-bottom-left'>{title}</div>
           <div className='header-bottom-right'>
             <span className='time'>{curTime}</span>
-
             <span>{wrather}</span>
           </div>
         </div>

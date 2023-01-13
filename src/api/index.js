@@ -2,9 +2,9 @@
 import ajax from './ajax'
 import axios from 'axios'
 import config from './config'
+import category from './category'
 import { message } from 'antd'
-// import config from './config'
-// const baseURL = config.baseURL
+
 export const reqLogin = (username, password) =>
   ajax('login', { username, password }, 'POST')
 
@@ -26,7 +26,12 @@ export const reqGetWheather = () => {
 
   // })
 }
-reqGetWheather()
+
+const API = {
+  category
+}
+
+export default API
 
 // get 请求 jsonp 浏览器端 通过 script 标签发请求
 // 定义好响应数据的函数名称

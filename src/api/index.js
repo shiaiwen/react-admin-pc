@@ -3,6 +3,8 @@ import ajax from './ajax'
 import axios from 'axios'
 import config from './config'
 import category from './category'
+import product from './product'
+import roles from './roles'
 import { message } from 'antd'
 
 export const reqLogin = (username, password) =>
@@ -28,7 +30,9 @@ export const reqGetWheather = () => {
 }
 
 const API = {
-  category
+  category,
+  product,
+  roles
 }
 
 export default API

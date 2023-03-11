@@ -98,6 +98,7 @@ export default class Category extends Component {
     )
   }
   handleCancel = () => {
+    this.form.resetFields()
     this.setState({
       showStatus: 0
     })
@@ -117,6 +118,7 @@ export default class Category extends Component {
       categoryId,
       categoryName
     })
+    this.form.resetFields()
     if (res.status === 0) {
       message.success('更新成功')
       // 关闭对话框
@@ -125,7 +127,7 @@ export default class Category extends Component {
           showStatus: 0
         },
         () => {
-          // 重新加载列表
+          // 重新加载列表'
           this.getCategory(parentId)
         }
       )
@@ -135,7 +137,7 @@ export default class Category extends Component {
   }
   handleAdd = async () => {
     // 收集数据并提交添加分类请求
-    console.log(this.form, '@@form')
+    // console.log(this.form, '@@form')
     const { parentId, categoryName } = this.form.getFieldsValue()
     // 清除输入数据
     this.form.resetFields()

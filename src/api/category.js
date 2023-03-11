@@ -15,6 +15,10 @@ const reqUpdateCategory = ({ categoryId, categoryName }) =>
 // 获取一个分类
 const reqCategory = categoryId => ajax('/manage/category/info', { categoryId })
 
+
+
+
+
 const category = {
   reqCategorys,
   reqAddCategory,

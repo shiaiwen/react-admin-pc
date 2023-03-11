@@ -23,7 +23,7 @@ class Header extends Component {
       this.setState({
         curTime
       })
-    }, 1000);
+    }, 1000)
   }
 
   getWeather = async () => {
@@ -33,48 +33,50 @@ class Header extends Component {
     })
   }
 
+  // getUser = () => (this.user = localStorage.getUser())
+
   getTitle = () => {
     let title = ''
     const path = this.props.location.pathname
-    menuList.forEach((item) => {
+    menuList.forEach(item => {
       if (item.key === path) {
         title = item.title
       } else if (item.children) {
-        item.children.forEach((subItem) => {
-          if (subItem.key === path) {
+        item.children.forEach(subItem => {
+          if (path.indexOf(subItem.key) !== -1) {
             title = subItem.title
           }
         })
       }
     })
     return title
-
   }
 
   logout = () => {
-    const { confirm } = Modal;
+    const { confirm } = Modal
     confirm({
       title: '确认退出登录吗',
-      okText: "确认",
+      okText: '确认',
       cancelText: '取消',
       onOk: () => {
         storage.user = {}
         localStorage.removeUser()
         this.props.history.replace('/login')
-      },
-
-    });
+      }
+    })
   }
 
   // 第一次 render 之后执行, 一般用来执行 异步操作
   componentDidMount() {
     this.getTime()
+    // this.getUser()
     this.getWeather()
+    // console.log(localStorage.getUser(),"user")
+    this.username = localStorage.getUser().username
   }
   componentWillUnmount() {
     clearInterval(this.timer)
   }
-
 
   render() {
     const { curTime, wrather } = this.state
@@ -82,7 +84,7 @@ class Header extends Component {
     return (
       <div className='header'>
         <div className='header-top'>
-          <span>欢迎，admin</span>
+          <span>欢迎 {this.username}</span>
           {/* <Button type="link" onClick={this.logout}>退出</Button> */}
           <LinkButton onClick={this.logout}>退 出</LinkButton>
         </div>

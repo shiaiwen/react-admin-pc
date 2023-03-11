@@ -7,7 +7,7 @@ import { message } from 'antd'
 // import config from './config'
 // const baseURL = config.baseURL
 // axios 统一处理异常
-export default function ajax(url, data = {}, type = 'GET') {
+const ajax = (url, data = {}, type = 'GET') => {
   return new Promise(resolve => {
     let promise
     if (type === 'GET') {
@@ -22,3 +22,4 @@ export default function ajax(url, data = {}, type = 'GET') {
       .catch(error => message.error(`请求出错了:${error.message}`))
   })
 }
+export default ajax

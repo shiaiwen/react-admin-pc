@@ -5,6 +5,7 @@ import config from './config'
 import category from './category'
 import product from './product'
 import roles from './roles'
+import user from './user'
 import { message } from 'antd'
 
 export const reqLogin = (username, password) =>
@@ -32,7 +33,8 @@ export const reqGetWheather = () => {
 const API = {
   category,
   product,
-  roles
+  roles,
+  user
 }
 
 export default API

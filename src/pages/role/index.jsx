@@ -4,6 +4,8 @@ import { Card, Button, Table, Modal, message } from 'antd'
 import AddForm from './add-form'
 import AuthForm from './auth-form'
 import localStorage from '../../utils/localStorage'
+import storage from '../../utils/storage'
+
 import dateUtlls from '../../utils/dateUtils'
 
 export default class Category extends Component {
@@ -97,10 +99,22 @@ export default class Category extends Component {
     role.menus = menus
     role.auth_name = localStorage.getUser().username
     const res = await API.roles.reqUpdateRole(role)
+
     if (res.status === 0) {
-      message.success('设置角色权限成功')
+      if (role._id === storage.user.role_id) {
+        storage.user = {}
+        localStorage.removeUser()
+        this.props.history.replace('/login')
+        message.success('当前角色权限已经修改,请重新登录')
+      } else {
+        message.success('设置角色权限成功')
+      }
       this.setState({
         isShowAuth: false
+      })
+    } else {
+      this.setState({
+        isShowAuth: true
       })
     }
   }
@@ -152,7 +166,11 @@ export default class Category extends Component {
           }}
           rowSelection={{
             type: 'radio',
-            selectedRowKeys: [_id]
+            selectedRowKeys: [_id],
+            onSelect: role => {
+              // 选择 某个 radio 的 回调
+              this.setState({ role })
+            }
           }}
           columns={this.columns}
           bordered

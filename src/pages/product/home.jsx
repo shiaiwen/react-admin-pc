@@ -132,7 +132,7 @@ export default class ProductHome extends Component {
 
   render() {
     const { products, total, loading, searchType, searchName } = this.state
-    const { columns } = this
+    const { columns, pageNum } = this
     console.log(columns, 'rander中的columns信息')
     const title = (
       <span>
@@ -184,7 +184,8 @@ export default class ProductHome extends Component {
             defaultPageSize: PAGE_SIZE,
             total,
             showQuickJumper: true,
-            onChange: this.getProducts
+            onChange: this.getProducts,
+            current: pageNum
           }}
           columns={columns}
           bordered
